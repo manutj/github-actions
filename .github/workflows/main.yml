@@ -1,0 +1,28 @@
+name: API Mongo V1
+
+#En que casos se va a activar el workflow
+on: [push,pull_request]
+
+jobs:
+  build:
+    #Le decimos en que SO de va a ejecutar nuestro CI
+    runs-on: ubuntu-latest
+    #Son los pasos que hay que hacer para que el build funcione 
+    steps:
+      #que version de github actions se va a usar
+      - uses: actions/checkout@v2
+      #Nombrar el paso que se va a ejecutar
+      - name: Build Docker Image
+        #Ejecuta el comando para construir la imagen de docker
+        run: docker build . --file dockerfile --tag api-mongo-v1
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test API
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      - run: npm test

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest --verbose --forceExit --detectOpenHandles",
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
@@ -19,5 +20,8 @@
     "mongoose": "6.0.11",
     "multer": "1.4.3",
     "nodemon": "2.0.13"
+  },
+  "devDependencies": {
+    "jest": "27.4.3"
   }
 }
