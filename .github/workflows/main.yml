@@ -1,7 +1,7 @@
 name: API Mongo V1
 
 #En que casos se va a activar el workflow
-on: [push,pull_request]
+on: [pull_request]
 
 jobs:
   build:
