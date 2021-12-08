@@ -1,4 +1,7 @@
+const dotenv = require('dotenv')
 const { Storage } = require("@google-cloud/storage");
+
+dotenv.config()
 
 const storage = new Storage({
     projectId: process.env.FIREBASE_PROJECT_ID,

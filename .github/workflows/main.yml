@@ -1,24 +1,69 @@
-name: API Mongo V1
+# name: API Mongo V1 (development)
 
-#En que casos se va a activar el workflow
-on: [push,pull_request]
+# #En que casos se va a activar el workflow
+# on: [push, pull_request]
 
-jobs:
-  build:
-    #Le decimos en que SO de va a ejecutar nuestro CI
-    runs-on: ubuntu-latest
-    #Son los pasos que hay que hacer para que el build funcione 
-    steps:
-      #que version de github actions se va a usar
-      - uses: actions/checkout@v2
-      #Nombrar el paso que se va a ejecutar
-      - name: Build Docker Image
-        #Ejecuta el comando para construir la imagen de docker
-        run: docker build . --file dockerfile --tag api-mongo-v1
+# jobs:
+#   build:
+#     #Le decimos en que SO de va a ejecutar nuestro CI
+#     runs-on: ubuntu-latest
+#     #Son los pasos que hay que hacer para que el build funcione 
+#     steps:
+#       #que version de github actions se va a usar
+#       - uses: actions/checkout@v2
+#       #Nombrar el paso que se va a ejecutar
+#       - name: Build Docker Image
+#         #Ejecuta el comando para construir la imagen de docker
+#         run: docker build . --file dockerfile --tag api-mongo-v1
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Test API
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: '12.x'
+#       - run: npm ci
+#       - run: npm test
+
+
+# API Mongo V2 (production)
+  name: api-mongo-v2
+
+  on:
+    push:
+      branches:
+        - master
+
+  jobs:
+    build:
+    
+      runs-on: ubuntu-latest
+ 
+      steps:
+        - uses: actions/checkout@v2
+        - name: Login to Heroku Registry
+          env:
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          run: heroku container:login  
+
+        - name: Build & push image 
+          run: |
+                docker build: . -t registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web -f docker/prod/dockerfile
+                docker push: registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+          env:
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 
+            
+        - name: Release 
+          env:
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}  
+          run: heroku container:release -a ${{secrets.HEROKU_APP_NAME}} web  
+
+
+    test:
+      runs-on: ubuntu-latest
+      steps:
       - uses: actions/checkout@v2
       - name: Test API
         uses: actions/setup-node@v1
