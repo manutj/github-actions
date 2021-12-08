@@ -50,7 +50,7 @@
 
         - name: Build & push image 
           run: |
-                docker build: . -t registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web -f docker/prod/dockerfile
+                docker build: . --tag registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web -f docker/prod/dockerfile
                 docker push: registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
           env:
             HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }} 

@@ -1,5 +1,5 @@
 jest.mock('../model/supermarket.js', ()=> jest.requireActual('../model/__mocks__/Article.js'))
-const ArticleController = require('../controller/supermarket')
+// const ArticleController = require('../controller/supermarket')
 
 //CLASE Y FUNCION QUE UTILIZAMOS PARA MIENTRAS RESOLVEMOS EL BUG DE JEST CON MONGOOSE
 

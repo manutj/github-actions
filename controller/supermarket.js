@@ -1,5 +1,5 @@
 //Importamos nuestro archivo de storage de Google Cloud y Firebase
-const storage = require("../utils/storage");
+// const storage = require("../utils/storage");
 
 //Importamos el archivos de modelos.
 const marketModels = require("../model/supermarket");
